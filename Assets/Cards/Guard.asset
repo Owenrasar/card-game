@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-172446255502027282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69a3c4a1e5a0e834c9f7a45f839f02d4, type: 3}
+  m_Name: Block
+  m_EditorClassIdentifier: 
+  value: 3
+  arg: 1
+  parentCard: {fileID: 0}
+  parentTimeline: {fileID: 0}
+  owner: {fileID: 0}
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 823f76085136e164790f9d079d589c10, type: 3}
+  m_Name: Guard
+  m_EditorClassIdentifier: 
+  actions:
+  - {fileID: -172446255502027282}
+  Cost: 1
