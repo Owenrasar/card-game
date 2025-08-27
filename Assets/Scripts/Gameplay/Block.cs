@@ -8,4 +8,8 @@ public class Block : Action
     {
         owner.GetComponent<HealthManager>().activeBlock = this;
     }
+    public override string giveType()
+    {
+        return "Dodge";
+    }
 }

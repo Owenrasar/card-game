@@ -9,5 +9,9 @@ public class Dodge : Action
         owner.GetComponent<HealthManager>().activeDodge = this;
         parentTimeline.GetComponent<CombatManager>().AddDodge(this);
     }
+    public override string giveType()
+    {
+        return "Dodge";
+    }
 }
  

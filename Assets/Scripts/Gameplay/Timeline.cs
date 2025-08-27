@@ -17,9 +17,25 @@ public class Timeline : MonoBehaviour
 
     public GameObject owner;
 
+    public Timeline targetTimeline;
+
     public void Tick()
     {
         currAction = actions[timeIndex];
+
+        //check if we need to FLIP
+        if (targetTimeline){
+            int ownerPos = tileIndexs[tileIndexs.Count -1];
+            int targetPos = targetTimeline.tileIndexs[targetTimeline.tileIndexs.Count -1];
+            if (targetPos < ownerPos){
+                string type = currAction.giveType();
+                if (type == "Dodge" || type == "Attack"){
+                    currAction.arg *= -1;
+                } 
+            }
+        }
+        
+
         currAction.Play();
         timeIndex += 1;
 

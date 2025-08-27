@@ -11,9 +11,18 @@ public class Attack : Action
     {
 
         CombatManager arenaManager = parentTimeline.gameObject.GetComponent<CombatManager>();
+        
+        int mult = 0;
+        if (arg >= 0)
+        {
+            mult = 1; 
+        } else {
+            mult = -1;
+        }
+
         for (int i = 1; i <= Mathf.Abs(arg); i++)
         {
-            area.Add(parentTimeline.tileIndexs[0] + i);//BAND AID FIX, make some sort of function to get correct tielindex. ALSO IT NEEDS TO FLIP
+            area.Add(parentTimeline.tileIndexs[0] + i*mult);//BAND AID FIX, make some sort of function to get correct tielindex. ALSO IT NEEDS TO FLIP
             //if you are striking something behind you.
         }
         arenaManager.AddAttack(this);
@@ -41,5 +50,10 @@ public class Attack : Action
     public void Destroy()
     {
         value = 0;
+    }
+
+    public override string giveType()
+    {
+        return "Attack";
     }
 }

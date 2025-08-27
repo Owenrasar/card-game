@@ -17,4 +17,6 @@ public abstract class Action : ScriptableObject
 
     public abstract void Play();
 
+    public abstract string giveType();
+
 }

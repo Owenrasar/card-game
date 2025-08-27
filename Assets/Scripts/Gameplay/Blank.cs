@@ -7,4 +7,8 @@ public class Blank : Action
     public override void Play()
     {
     }
+    public override string giveType()
+    {
+        return "Blank";
+    }
 }
