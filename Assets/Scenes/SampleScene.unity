@@ -446,12 +446,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerOwned: 0
   cards:
-  - {fileID: 11400000, guid: 6c7d5d47998bfe64b85233b878242e65, type: 2}
+  - {fileID: 11400000, guid: 1b8403dff318cfb479b6d876b95ebf85, type: 2}
   actions: []
   currAction: {fileID: 0}
   timeIndex: 0
   tileIndexs: 03000000
   owner: {fileID: 1840362655}
+  targetTimeline: {fileID: 1613910681}
 --- !u!114 &1613910678
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -503,8 +504,9 @@ MonoBehaviour:
   actions: []
   currAction: {fileID: 0}
   timeIndex: 0
-  tileIndexs: 00000000
+  tileIndexs: 04000000
   owner: {fileID: 1768287047}
+  targetTimeline: {fileID: 1613910671}
 --- !u!1 &1768287047
 GameObject:
   m_ObjectHideFlags: 0
@@ -596,7 +598,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1768287047}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -4.5}
+  m_LocalPosition: {x: 4, y: 1, z: -4.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

@@ -27,11 +27,14 @@ public class Timeline : MonoBehaviour
         if (targetTimeline){
             int ownerPos = tileIndexs[tileIndexs.Count -1];
             int targetPos = targetTimeline.tileIndexs[targetTimeline.tileIndexs.Count -1];
-            if (targetPos < ownerPos){
+            if (targetPos < ownerPos)
+            {
+
                 string type = currAction.giveType();
-                if (type == "Dodge" || type == "Attack"){
+                if (type == "Dodge" || type == "Attack")
+                {
                     currAction.arg *= -1;
-                } 
+                }
             }
         }
         

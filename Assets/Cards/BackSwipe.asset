@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4aeb9c6c29c67847b295ec95945b1d6, type: 3}
   m_Name: Attack
   m_EditorClassIdentifier: 
-  valueMod: 0
+  valueMod: 2
   value: 0
-  arg: 3
+  arg: -3
   parentCard: {fileID: 0}
   parentTimeline: {fileID: 0}
   owner: {fileID: 0}
@@ -30,7 +30,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 823f76085136e164790f9d079d589c10, type: 3}
-  m_Name: Swipe
+  m_Name: BackSwipe
   m_EditorClassIdentifier: 
   actions:
   - {fileID: -3251685261105968052}

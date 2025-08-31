@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actions:
   - {fileID: 3576788996707630335}
-  Cost: 1
+  cost: 0
 --- !u!114 &3576788996707630335
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27,8 +27,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac81b317c137c1b498723b0310a7edb3, type: 3}
   m_Name: Dodge
   m_EditorClassIdentifier: 
+  valueMod: 0
   value: 3
-  arg: -1
+  arg: -2
   parentCard: {fileID: 0}
   parentTimeline: {fileID: 0}
   owner: {fileID: 0}
