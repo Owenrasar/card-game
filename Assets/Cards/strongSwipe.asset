@@ -12,11 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4aeb9c6c29c67847b295ec95945b1d6, type: 3}
   m_Name: Attack
   m_EditorClassIdentifier: 
-  value: 3
+  valueMod: 2
+  value: 0
   arg: 2
-  parentCard: {fileID: 0}
+  parentCard: {fileID: 11400000}
   parentTimeline: {fileID: 0}
   owner: {fileID: 0}
+  isEX: 0
   area: 
 --- !u!114 &11400000
 MonoBehaviour:
@@ -32,4 +34,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actions:
   - {fileID: -3251685261105968052}
-  Cost: 1
+  cost: 2

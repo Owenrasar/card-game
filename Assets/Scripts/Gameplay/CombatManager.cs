@@ -147,6 +147,7 @@ public class CombatManager : MonoBehaviour
                 Vector3 pos = dodge.owner.transform.position;
                 pos.x = dodge.parentTimeline.tileIndexs[0];
                 dodge.owner.transform.position = pos;
+                dodge.render();
             }
     }
 
@@ -203,9 +204,11 @@ public class CombatManager : MonoBehaviour
                 }
             }
         }
-
         attacks.RemoveAll(a => a is Attack atk && toDestroy.Contains(atk));
-
+        foreach (var attack in attacks)
+        {
+            attack.render();
+        }
 
         foreach (var action in attacks) // attacks damage (or get blocked or dodged)
         {

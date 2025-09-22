@@ -12,4 +12,9 @@ public class Block : Action
     {
         return "Dodge";
     }
+
+    public override void render()
+    {
+        
+    }
 }

@@ -1,7 +1,10 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class Action : ScriptableObject
 {
+    public List<GameObject> markers = new List<Timeline>();
     public int valueMod;
 
     public int value = 0;
@@ -17,6 +20,14 @@ public abstract class Action : ScriptableObject
 
     public abstract void Play();
 
+    public abstract void ClashLose();
+
+    public abstract void ClashWin();
+
     public abstract string giveType();
+
+    public abstract void render();
+
+    
 
 }

@@ -19,14 +19,19 @@ public class Timeline : MonoBehaviour
 
     public Timeline targetTimeline;
 
+    public GameObject attackMarker;
+
+    public GameObject dodgeMarker;
+
     public void Tick()
     {
         currAction = actions[timeIndex];
 
         //check if we need to FLIP
-        if (targetTimeline){
-            int ownerPos = tileIndexs[tileIndexs.Count -1];
-            int targetPos = targetTimeline.tileIndexs[targetTimeline.tileIndexs.Count -1];
+        if (targetTimeline)
+        {
+            int ownerPos = tileIndexs[tileIndexs.Count - 1];
+            int targetPos = targetTimeline.tileIndexs[targetTimeline.tileIndexs.Count - 1];
             if (targetPos < ownerPos)
             {
 
@@ -37,7 +42,7 @@ public class Timeline : MonoBehaviour
                 }
             }
         }
-        
+
 
         currAction.Play();
         timeIndex += 1;

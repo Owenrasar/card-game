@@ -9,7 +9,7 @@ public class TimelineManager : MonoBehaviour
     public float tickInterval = 1f;
 
     public float timeSize = 4;
-    
+
     public CombatManager arena;
 
     void Start()
@@ -35,10 +35,21 @@ public class TimelineManager : MonoBehaviour
 
     void MasterTick()
     {
+        cleanseMarkers();
         foreach (var timeline in timelines)
         {
             timeline.Tick();
         }
         arena.Tick();
+    }
+
+    void cleanseMarkers()
+    {
+        GameObject markerPlace = transform.parent.Find("Markers").gameObject;
+
+        foreach (Transform marker in markerPlace.transform)
+        {
+            GameObject.Destroy(marker.gameObject);
+        }
     }
 }

@@ -11,4 +11,9 @@ public class Blank : Action
     {
         return "Blank";
     }
+
+    public override void render()
+    {
+        
+    }
 }
