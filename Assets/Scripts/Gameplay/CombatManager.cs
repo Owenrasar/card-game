@@ -12,15 +12,19 @@ public class CombatManager : MonoBehaviour
 
     public List<Action> dodges = new List<Action>();
 
+    public List<Action> telegraphs = new List<Action>();
+
     public void Tick()
     {
         //determine hitboxes, then strike them, then update hitboxes, then remove blocks
+        ResolvePrep();
         ResolveDodges();
         ResolveAttacks();
         ResetDodges();
         ResolveBlocks();
         attacks = new List<Action>();
         dodges = new List<Action>();
+        telegraphs = new List<Action>();
     }
 
     public void AddAttack(Action attack)
@@ -33,9 +37,28 @@ public class CombatManager : MonoBehaviour
         dodges.Add(dodge);
     }
 
+    public void AddTelegraph(Action telegraph)
+    {
+        telegraphs.Add(telegraph);
+        Debug.Log("aded tele");
+    }
+
+    public void ResolvePrep()
+    {
+        foreach(Transform child in transform.parent.Find("TeleMarkers").transform)
+        {
+            Destroy(child.gameObject);
+        }
+
+        foreach (Telegraph telegraph in telegraphs)
+        {
+            telegraph.render();
+        }
+    }
+
     public void ResolveDodges()
     {
-        foreach (Dodge dodge in dodges) //set up tileindexes
+        foreach (Dodge dodge in dodges)
         {
 
             //extend hitbox for the dash
@@ -55,7 +78,6 @@ public class CombatManager : MonoBehaviour
                     newTiles.Add(i);
             }
             dodge.parentTimeline.tileIndexs = newTiles;
-            //
         }
         List<Timeline> dodgers = new List<Timeline>();
         List<Timeline> standers = new List<Timeline>();
@@ -130,7 +152,7 @@ public class CombatManager : MonoBehaviour
                                 int cutoff = bTimeline.tileIndexs[0];
                                 int cutoffIndex = dTimeline.tileIndexs.IndexOf(cutoff);
                                 dTimeline.tileIndexs = dTimeline.tileIndexs.Skip(cutoffIndex + 1).ToList();
-                                change = true;
+                                
                             }
 
                         }
@@ -163,6 +185,7 @@ public class CombatManager : MonoBehaviour
     public void ResolveAttacks()
     {
         HashSet<Attack> toDestroy = new HashSet<Attack>();
+        HashSet<Attack> toWin = new HashSet<Attack>();
 
         for (int i = 0; i < attacks.Count; i++) //attacks clash attacks
         {
@@ -188,10 +211,12 @@ public class CombatManager : MonoBehaviour
                         if (loser == "other")
                         {
                             toDestroy.Add(atkB);
+                            toWin.Add(atkA);
                         }
                         else if (loser == "self")
                         {
                             toDestroy.Add(atkA);
+                            toWin.Add(atkB);
                         }
                         else if (loser == "both")
                         {
@@ -204,10 +229,16 @@ public class CombatManager : MonoBehaviour
                 }
             }
         }
-        attacks.RemoveAll(a => a is Attack atk && toDestroy.Contains(atk));
-        foreach (var attack in attacks)
+
+        foreach (var attack in attacks)//finish up clashing between attacks
         {
             attack.render();
+            if (toDestroy.Contains(attack)) {
+                attack.ClashLose();
+            }
+            if (toWin.Contains(attack)) {
+                attack.ClashWin();
+            }
         }
 
         foreach (var action in attacks) // attacks damage (or get blocked or dodged)
@@ -226,7 +257,7 @@ public class CombatManager : MonoBehaviour
                 bool overlaps = timeline.tileIndexs.Any(index => atk.area.Contains(index));
                 if (overlaps)
                 {
-                    timeline.owner.GetComponent<HealthManager>().Hit(atk.value);
+                    timeline.owner.GetComponent<HealthManager>().Hit(atk);
                     alreadyHit.Add(timeline.owner);
                 }
             }
@@ -243,9 +274,10 @@ public class CombatManager : MonoBehaviour
             if (checker)
             {
                 checker.arg -= 1;
-                if (checker.arg <= 0)
+                if (checker.arg < 0)
                 {
                     timeline.owner.GetComponent<HealthManager>().activeBlock = null;
+                    checker.expire();
                 }
             }
         }

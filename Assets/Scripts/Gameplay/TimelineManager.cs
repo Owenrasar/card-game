@@ -12,13 +12,15 @@ public class TimelineManager : MonoBehaviour
 
     public CombatManager arena;
 
-    void Start()
+    public void StartRound()
     {
+        
         foreach (var timeline in timelines)
         {
             timeline.Init();
         }
 
+        timeSize = timelines[0].actions.Count+2;
         StartCoroutine(RunTimelineTicks());
     }
 

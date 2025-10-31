@@ -12,11 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69a3c4a1e5a0e834c9f7a45f839f02d4, type: 3}
   m_Name: Block
   m_EditorClassIdentifier: 
-  value: 3
+  markers: []
+  valueMod: 2
+  value: 0
   arg: 1
   parentCard: {fileID: 0}
   parentTimeline: {fileID: 0}
   owner: {fileID: 0}
+  isEX: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31,4 +34,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actions:
   - {fileID: -172446255502027282}
-  Cost: 1
+  cost: 1
+  name: Guard

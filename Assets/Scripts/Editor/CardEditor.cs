@@ -58,6 +58,7 @@ public class CardEditor : Editor
         if (GUILayout.Button("Add Dodge")) AddAction<Dodge>();
         if (GUILayout.Button("Add Block")) AddAction<Block>();
         if (GUILayout.Button("Add Blank")) AddAction<Blank>();
+        if (GUILayout.Button("Add Telegraph")) AddAction<Telegraph>();
 
         EditorGUILayout.Space();
         actionsList.DoLayoutList();

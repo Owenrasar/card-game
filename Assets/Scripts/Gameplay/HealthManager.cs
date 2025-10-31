@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class HealthManager : MonoBehaviour
 {
+    public GameObject notifyPrefab;
     public float HP;
     public float stagger = 0;
 
@@ -22,28 +24,14 @@ public class HealthManager : MonoBehaviour
 
     }
 
-    public void Hit(int baseDamage)
+    public void Hit(Attack atk)
     {
-        if (activeBlock)
+        int baseDamage = atk.value;
+        if (activeBlock) //block-attack clash
         {
-            if (baseDamage <= activeBlock.value)
-            {
-                
-                activeBlock.value -= baseDamage;
-                Debug.Log("blocked to " + activeBlock.value);
-                return;
-            }
-            else
-            {
-
-                //gaurdbreak
-                HP -= (baseDamage - activeBlock.value);
-                stagger += (baseDamage - activeBlock.value);
-                activeBlock = null;
-                Debug.Log("blocked but not but OW");
-            }
+            ((Block)activeBlock).blockHit(atk,this);
         }
-        else if (activeDodge)
+        else if (activeDodge)//dodge-attack clash
         {
             if (baseDamage <= activeDodge.value)
             {
@@ -54,17 +42,35 @@ public class HealthManager : MonoBehaviour
             {
 
                 //staggering blow
-                HP -= baseDamage;
-                stagger += baseDamage;
-                activeBlock = null;
+                this.takeDamage(baseDamage);
+                this.takeStagger(baseDamage);
+                activeDodge.ClashLose();
+                atk.ClashWin();
+
+                activeDodge = null;
+                
                 Debug.Log("dodged but not but OW");
             }
         }
         else
         {
             //normal hit
-            HP -= baseDamage;
+            this.takeDamage(baseDamage);
             Debug.Log("ow");
         }
+    }
+
+    public void takeDamage(int damage){
+        HP -= damage;
+        GameObject n = Instantiate(notifyPrefab);
+        n.GetComponent<Notify>().DisplayNotify((damage).ToString(), this.gameObject.transform.position, Color.red, 1f);
+    }
+
+    public void takeStagger(int damage){
+        stagger -= damage;
+
+        GameObject n = Instantiate(notifyPrefab);
+        n.GetComponent<Notify>().DisplayNotify((damage).ToString(), this.gameObject.transform.position, Color.yellow, 0.75f);
+    
     }
 }

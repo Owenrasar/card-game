@@ -16,17 +16,23 @@ public class Dodge : Action
 
     public override void render()
     {
-        GameObject markerFab = parentTimeline.dodgeMarker;
+        GameObject markerFab = markers[0];
         GameObject markerPlace = parentTimeline.transform.parent.Find("Markers").gameObject;
         int dir = parentTimeline.tileIndexs[0] - parentTimeline.tileIndexs[parentTimeline.tileIndexs.Count-1];
-
+        bool first = true;
         foreach (var pos in parentTimeline.tileIndexs)
         {
-            GameObject marker = Instantiate(markerFab, new Vector3(pos, 1, -1), Quaternion.identity);
-            marker.transform.parent = markerPlace.transform;
-            if (dir < 0)
-            {
-                marker.GetComponent<SpriteRenderer>().flipX = true;
+            if (!first){
+                GameObject marker = Instantiate(markerFab, new Vector3(pos, 1, -1), Quaternion.identity);
+                marker.transform.parent = markerPlace.transform;
+                markers.Add(marker);
+                marker.GetComponent<Marker>().FlashActive(0.0f,0.5f);
+                if (dir < 0)
+                {
+                    marker.GetComponent<SpriteRenderer>().flipX = true;
+                }
+            } else {
+                first = false;
             }
         }
     }
