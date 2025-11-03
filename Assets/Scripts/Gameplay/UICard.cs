@@ -6,6 +6,7 @@ using TMPro;
 public class UICard : MonoBehaviour
 {
     public TextMeshPro nameLabel;
+    public TextMeshPro dashLabel;
     public TextMeshPro actionLabel;
     public Card linkedCard;
     public Timeline linkedTimeline;
@@ -14,19 +15,20 @@ public class UICard : MonoBehaviour
     [Header("Positions (local space, relative to parent)")]
     // public Vector3 bottomPos; // Replaced by bottomPosY
     // public Vector3 topPos; // Replaced by topPosY
-    public float bottomPosY = 0f;
-    public float topPosY = 50f; // Added a default value
+    public float bottomPosY;
+    public float topPosY;
 
     [Header("Settings")]
     public float moveSpeed = 2f;
     // New variables for scaling
     // public Vector3 lowerScale = Vector3.one; // Replaced by lowerScaleXZ
     // public Vector3 upperScale = new Vector3(1.1f, 1.1f, 1.1f); // Replaced by upperScaleXZ
-    public float lowerScaleXZ = 1.0f;
-    public float upperScaleXZ = 1.1f; // Default to 110%
+    public float lowerScale = 0.4f;
+    public float upperScale = 0.75f;
 
     private Coroutine currentMove;
     private RectTransform rectTransform;
+    private Canvas cardCanvas;
 
     private void Awake()
     {
@@ -34,8 +36,19 @@ public class UICard : MonoBehaviour
         
         rectTransform = GetComponent<RectTransform>();
         // Initialize scale to lowerScaleXZ, and set Y scale to 1.0f to match old Vector3.one default
-        rectTransform.localScale = new Vector3(lowerScaleXZ, 1.0f, lowerScaleXZ);
+        rectTransform.localScale = new Vector3(lowerScale, lowerScale, lowerScale);
         linkedCard = deck.Draw();
+
+        cardCanvas = gameObject.transform.GetChild(0).gameObject.GetComponent<Canvas>();
+    
+        // Set a default order
+        if (cardCanvas != null)
+        {
+            cardCanvas.sortingOrder = 0;
+            nameLabel.sortingOrder = 0;
+            dashLabel.sortingOrder = 0;
+            actionLabel.sortingOrder = 0;
+        }
         Init();
     }
 
@@ -49,16 +62,24 @@ public class UICard : MonoBehaviour
         Vector3 targetPos = new Vector3(
             rectTransform.localPosition.x,
             topPosY,
-            rectTransform.localPosition.z
+            -5.1f
         );
         
         // Target X/Z scale is from variable, Y scale is from current transform
         Vector3 targetScale = new Vector3(
-            upperScaleXZ,
-            rectTransform.localScale.y,
-            upperScaleXZ
+            upperScale,
+            upperScale,
+            upperScale
         );
 
+        if (cardCanvas != null)
+        {
+            // Set this card's order to 1 (or any number higher than the default)
+            cardCanvas.sortingOrder = 1;
+            nameLabel.sortingOrder = 1;
+            dashLabel.sortingOrder = 1;
+            actionLabel.sortingOrder = 1;
+        }
         currentMove = StartCoroutine(MoveAndScaleRoutine(targetPos, targetScale));
     }
 
@@ -76,16 +97,24 @@ public class UICard : MonoBehaviour
         Vector3 targetPos = new Vector3(
             rectTransform.localPosition.x,
             bottomPosY,
-            rectTransform.localPosition.z
+           -5 
         );
         
         // Target X/Z scale is from variable, Y scale is from current transform
         Vector3 targetScale = new Vector3(
-            lowerScaleXZ,
-            rectTransform.localScale.y,
-            lowerScaleXZ
+            lowerScale,
+            lowerScale,
+            lowerScale
         );
 
+        if (cardCanvas != null)
+        {
+            // Set it back to the default order
+            cardCanvas.sortingOrder = 0;
+            nameLabel.sortingOrder = 0;
+            dashLabel.sortingOrder = 0;
+            actionLabel.sortingOrder = 0;
+        }
         currentMove = StartCoroutine(MoveAndScaleRoutine(targetPos, targetScale));
     }
 

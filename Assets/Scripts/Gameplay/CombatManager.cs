@@ -22,6 +22,7 @@ public class CombatManager : MonoBehaviour
         ResolveAttacks();
         ResetDodges();
         ResolveBlocks();
+        RemoveDodges();
         attacks = new List<Action>();
         dodges = new List<Action>();
         telegraphs = new List<Action>();
@@ -279,6 +280,17 @@ public class CombatManager : MonoBehaviour
                     timeline.owner.GetComponent<HealthManager>().activeBlock = null;
                     checker.expire();
                 }
+            }
+        }
+    }
+
+    public void RemoveDodges() {
+        foreach (var timeline in FindObjectsOfType<Timeline>())
+        {
+            Dodge checker = timeline.owner.GetComponent<HealthManager>().activeDodge;
+            if (checker)
+            {
+                timeline.owner.GetComponent<HealthManager>().activeDodge = null;
             }
         }
     }
