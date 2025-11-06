@@ -57,6 +57,7 @@ public class Timeline : MonoBehaviour
                     ((Telegraph)currAction).linkedAction.arg *= -1;
                 }
             } 
+            //display stuff
             currAction.Play();
             if (ownerLabel) {
                 if (type == "Telegraph") {
@@ -82,6 +83,7 @@ public class Timeline : MonoBehaviour
     public void Init()
     {
         List<Card> uniqueCards = new List<Card>();
+        actions = new List<Action>();
         Telegraph teleAction = null;
 
         foreach (var originalCard in cards)
@@ -127,6 +129,52 @@ public class Timeline : MonoBehaviour
             uniqueCards.Add(newCard);
         }
         cards = uniqueCards;
+    }
+
+    public void softInit()
+    {
+        
+        List<Card> uniqueCards = new List<Card>();
+        actions = new List<Action>();
+        Telegraph teleAction = null;
+
+        foreach (var originalCard in cards)
+        {
+            Card newCard = Instantiate(originalCard);
+
+            newCard.actions = new List<Action>();
+            
+            foreach (var originalAction in originalCard.actions)
+            {
+                Action newAction = Instantiate(originalAction);
+                newAction.parentCard = newCard;
+                newAction.parentTimeline = this;
+                newAction.owner = owner;
+                newAction.value = newCard.cost+newAction.valueMod;
+                string type = newAction.giveType();
+                if (type == "Attack"){
+                    newAction.markers.Add(attackMarker);
+                    newAction.markers.Add(attackLostMarker);
+                }
+                if (type == "Dodge"){
+                    newAction.markers.Add(dodgeMarker);
+                    newAction.markers.Add(dodgeLostMarker);
+                }
+                if (type == "Block"){
+                    newAction.markers.Add(blockMarker);
+                    newAction.markers.Add(blockLostMarker);
+                }
+
+                Telegraph newTelegraph = Instantiate(telegraph);
+                newTelegraph.linkedAction = newAction;
+                newTelegraph.parentCard = newCard;
+                newTelegraph.parentTimeline = this;
+                newTelegraph.owner = owner;
+
+                actions.Add(newTelegraph);
+                actions.Add(newAction);
+            }
+        }
     }
 
 }

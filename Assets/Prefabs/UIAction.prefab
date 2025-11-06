@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3898485644591977635}
   - component: {fileID: 5027915542802702944}
+  - component: {fileID: 6200289533055813547}
   m_Layer: 0
   m_Name: UIAction
   m_TagString: Untagged
@@ -86,6 +87,27 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &6200289533055813547
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3062754627759912233}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 689cbf28200c7064ca39ac75e94ca21e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  valueLabel: {fileID: 7299114332056881228}
+  argLabel: {fileID: 913546141558361738}
+  linkedAction: {fileID: 0}
+  linkedTimeline: {fileID: 0}
+  defaultColor: {r: 0, g: 0, b: 0, a: 0}
+  attackColor: {r: 0, g: 0, b: 0, a: 0}
+  dodgeColor: {r: 0, g: 0, b: 0, a: 0}
+  blockColor: {r: 0, g: 0, b: 0, a: 0}
+  linkedIndex: 0
 --- !u!1 &3824212350332755708
 GameObject:
   m_ObjectHideFlags: 0
@@ -249,7 +271,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0.0760892, z: 0.7138861, w: 0.4074841}
+  m_margin: {x: 0, y: 0.0760892, z: 0.0998995, w: 0.4074841}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   _SortingLayer: 0

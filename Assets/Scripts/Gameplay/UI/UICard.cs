@@ -5,16 +5,21 @@ using TMPro;
 
 public class UICard : MonoBehaviour
 {
+    public AudioSource hoverSound;
+    public AudioSource playSound;
+
     public TextMeshPro nameLabel;
     public TextMeshPro dashLabel;
     public TextMeshPro actionLabel;
     public Card linkedCard;
     public Timeline linkedTimeline;
     public DeckManager deck;
+    public UITimeline linkedUITimeline;
 
     [Header("Positions (local space, relative to parent)")]
     // public Vector3 bottomPos; // Replaced by bottomPosY
     // public Vector3 topPos; // Replaced by topPosY
+    public float offPosY;
     public float bottomPosY;
     public float topPosY;
 
@@ -30,9 +35,10 @@ public class UICard : MonoBehaviour
     private RectTransform rectTransform;
     private Canvas cardCanvas;
 
-    private void Awake()
+    public void Init()
     {
-        deck = transform.parent.parent.parent.Find("Deck").GetComponent<DeckManager>();
+
+        deck = transform.parent.parent.parent.Find("PlayerDeck").GetComponent<DeckManager>();
         
         rectTransform = GetComponent<RectTransform>();
         // Initialize scale to lowerScaleXZ, and set Y scale to 1.0f to match old Vector3.one default
@@ -49,7 +55,8 @@ public class UICard : MonoBehaviour
             dashLabel.sortingOrder = 0;
             actionLabel.sortingOrder = 0;
         }
-        Init();
+        UpdateCard();
+        Lower();
     }
 
     public void Raise()
@@ -80,6 +87,7 @@ public class UICard : MonoBehaviour
             dashLabel.sortingOrder = 1;
             actionLabel.sortingOrder = 1;
         }
+        hoverSound.Play();
         currentMove = StartCoroutine(MoveAndScaleRoutine(targetPos, targetScale));
     }
 
@@ -167,7 +175,7 @@ public class UICard : MonoBehaviour
     }
 
 
-    public void Init()
+    public void UpdateCard()
     {
         nameLabel.text = "(" + linkedCard.cost.ToString() + ")" + linkedCard.name;
         actionLabel.text = "";
@@ -180,10 +188,12 @@ public class UICard : MonoBehaviour
 
     public void PlayToTimeline()
     {
+        playSound.Play();
         linkedTimeline.cards.Add(linkedCard);
-        deck = transform.parent.parent.parent.Find("Deck").GetComponent<DeckManager>();
+        linkedUITimeline.UpdateActions();
+        deck = transform.parent.parent.parent.Find("PlayerDeck").GetComponent<DeckManager>();
         linkedCard = deck.Draw();
-        Init();
+        UpdateCard();
     }
 }
 

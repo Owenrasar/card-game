@@ -12,7 +12,23 @@ public class TimelineManager : MonoBehaviour
 
     public CombatManager arena;
 
-    public void StartRound()
+
+    public List<UICard> UIcards = new List<UICard>();
+
+    public List<UITimeline> UItimelines = new List<UITimeline>();
+
+    void Start(){
+        StartCardRound();
+    }
+
+    public void StartCardRound() {
+        foreach (var timeline in UItimelines)
+        {
+            timeline.UpdateActions();
+        }
+        StartCoroutine(DrawHand());
+    }
+    public void StartCombatRound()
     {
         
         foreach (var timeline in timelines)
@@ -32,6 +48,16 @@ public class TimelineManager : MonoBehaviour
             Debug.Log(i);
             MasterTick();
             yield return new WaitForSeconds(tickInterval);
+        }
+    }
+
+    IEnumerator DrawHand()
+    {
+        yield return new WaitForSeconds(tickInterval);//delay becasue why not
+        foreach (var card in UIcards)
+        {
+            card.Init();
+            yield return new WaitForSeconds(tickInterval/4);
         }
     }
 

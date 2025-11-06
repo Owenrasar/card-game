@@ -40,8 +40,9 @@ public class CombatManager : MonoBehaviour
 
     public void AddTelegraph(Action telegraph)
     {
+        
         telegraphs.Add(telegraph);
-        Debug.Log("aded tele");
+        Debug.Log("aded tele: " + telegraph);
     }
 
     public void ResolvePrep()
