@@ -21,7 +21,6 @@ public class EnemyAI : MonoBehaviour
             linkedCard = deck.Draw();
             linkedTimeline.cards.Add(linkedCard);
             linkedTimeline.softInit();
-            Debug.Log((num).ToString() + "added: " + linkedCard + " count: " + (linkedTimeline.actions.Count).ToString());
             
             if (linkedTimeline.actions.Count > 12) {
                 Debug.Log("removing: " + linkedTimeline.cards[linkedTimeline.cards.Count -1]);

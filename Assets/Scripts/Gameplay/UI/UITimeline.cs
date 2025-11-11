@@ -12,7 +12,7 @@ public class UITimeline : MonoBehaviour
 
     void Start()
     {
-        Init();
+        
     }
 
     public void Init(){
@@ -26,6 +26,7 @@ public class UITimeline : MonoBehaviour
 
     public void UpdateActions()
     {
+
         linkedTimeline.softInit();
         foreach(var action in actions){
             action.UpdateAction();

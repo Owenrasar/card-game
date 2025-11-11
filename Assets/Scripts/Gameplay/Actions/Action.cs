@@ -27,17 +27,8 @@ public abstract class Action : ScriptableObject
         Sprite lostSprite = markers[1].GetComponent<SpriteRenderer>().sprite;
         foreach (var marker in markers) {
             if (i > 1){
-                SpriteRenderer markSpriteRend = marker.GetComponent<SpriteRenderer>();
-                Color markColor = markSpriteRend.color;
-                Color dimmedColor = new Color(
-                    markColor.r * 0.3f, 
-                    markColor.g * 0.3f, 
-                    markColor.b * 0.3f, 
-                    markColor.a
-                );
-                markSpriteRend.color = dimmedColor;
-                markSpriteRend.sprite= lostSprite;
-                marker.transform.position -= Vector3.forward * 0.1f;
+                marker.GetComponent<Marker>().Break();
+                
             } else {
                 i+=1;
             }

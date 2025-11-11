@@ -27,6 +27,10 @@ public class Notify : MonoBehaviour
     /// <param name="height">Arc height above the start position</param>
     public void DisplayNotify(string message, Vector3 position, Color color, float height)
     {
+        if (message == "0")
+        {
+            return;
+        }
         transform.position = position;
         textMesh.text = message;
         textMesh.color = color;

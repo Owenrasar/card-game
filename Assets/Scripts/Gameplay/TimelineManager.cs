@@ -24,6 +24,7 @@ public class TimelineManager : MonoBehaviour
     public void StartCardRound() {
         foreach (var timeline in UItimelines)
         {
+            timeline.Init();
             timeline.UpdateActions();
         }
         StartCoroutine(DrawHand());

@@ -4,12 +4,22 @@ using System.Collections; // Needed for IEnumerator
 public class Marker : MonoBehaviour
 {
     private SpriteRenderer spriteRenderer;
+
+    private Color originalColor;
     private Coroutine fadeRoutine;
     private Coroutine flashRoutine;
+
+    // --- NEW PUBLIC VARIABLES ---
+    [Header("Break Effect")]
+    public GameObject breakPrefab;
+    public float breakSpeed = 2f;
+    public float breakFadeDuration = 1f;
+    // ----------------------------
 
     void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+        originalColor = spriteRenderer.color;
     }
 
     // Call this to start the fade in/out effect
@@ -23,7 +33,6 @@ public class Marker : MonoBehaviour
 
     private IEnumerator FadeInOut(float duration)
     {
-        Color originalColor = spriteRenderer.color;
 
         // Start fully transparent
         Color transparentColor = originalColor;
@@ -104,5 +113,52 @@ public class Marker : MonoBehaviour
         // Restore original
         spriteRenderer.color = originalColor;
         flashRoutine = null;
+    }
+
+    // --- NEW BREAK FUNCTION ---
+
+    /// <summary>
+    /// Disables the current sprite and spawns two breaking pieces.
+    /// </summary>
+    public void Break()
+    {
+        // Stop any current fade or flash
+        if (fadeRoutine != null)
+        {
+            StopCoroutine(fadeRoutine);
+            fadeRoutine = null;
+        }
+        if (flashRoutine != null)
+        {
+            StopCoroutine(flashRoutine);
+            flashRoutine = null;
+        }
+
+        // Turn off this marker's sprite
+        spriteRenderer.enabled = false;
+
+        // Instantiate and initialize the break-down piece
+        if (breakPrefab != null)
+        {
+            GameObject downPiece = Instantiate(breakPrefab, transform.position, Quaternion.identity);
+            // Try to get the BrokenPiece script and initialize it
+            BrokenPiece pieceScript = downPiece.GetComponent<BrokenPiece>();
+            if (pieceScript != null)
+            {
+                pieceScript.Initialize(Vector3.down, breakSpeed, breakFadeDuration, originalColor);
+            }
+            else
+            {
+                Debug.LogWarning("breakPrefab is missing the BrokenPiece.cs script!");
+            }
+            
+            GameObject upPiece = Instantiate(breakPrefab, transform.position, Quaternion.Euler(0, 0, 180f));
+            BrokenPiece upPieceScript = upPiece.GetComponent<BrokenPiece>();
+            
+            if (upPieceScript != null)
+            {
+                upPieceScript.Initialize(Vector3.up, breakSpeed, breakFadeDuration, originalColor);
+            }
+        }
     }
 }

@@ -45,6 +45,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d022af62c53501b47be81798b38ea91d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  breakPrefab: {fileID: 1366655376615053055, guid: 885475d0a7c4f0c47a81177aa785d4bf, type: 3}
+  breakSpeed: 1
+  breakFadeDuration: 0.5
 --- !u!212 &7410814533932126575
 SpriteRenderer:
   m_ObjectHideFlags: 0
