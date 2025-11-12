@@ -7,6 +7,8 @@ using UnityEngine;
 public class Attack : Action
 {
     public List<int> area = new List<int>();
+
+    public bool lost = false;
     public override void Play()
     {
 
@@ -68,33 +70,35 @@ public class Attack : Action
 
     public override void render()
     {
+        
         GameObject markerFab = markers[0];
         GameObject markerPlace = parentTimeline.transform.parent.Find("Markers").gameObject;
-        
+        int mult = 0;
+        if (arg >= 0)
+        {
+            mult = 1;
+        }
+        else
+        {
+            mult = -1;
+        }
+            
         if (area.Count==0){
-            int mult = 0;
-            if (arg >= 0)
-            {
-                mult = 1;
-            }
-            else
-            {
-                mult = -1;
-            }
-
             for (int i = 1; i <= Mathf.Abs(arg); i++)
             {
                 area.Add(parentTimeline.tileIndexs[0] + i * mult);//BAND AID FIX, make some sort of function to get correct tielindex. ALSO IT NEEDS TO FLIP
             }
         }
         Debug.Log(area);
+
         foreach (var pos in area)
         {
             GameObject marker = Instantiate(markerFab, new Vector3(pos, 1, -1), Quaternion.identity);
             marker.transform.parent = markerPlace.transform;
             markers.Add(marker);
-            marker.GetComponent<Marker>().FlashActive(0.0f,0.5f);
+            marker.GetComponent<Marker>().FlashActive(0.0f, 0.5f);
         }
+        owner.GetComponent<ParticleManager>().playSlash((int)Mathf.Abs(arg),mult,lost);
 
     }
 }   

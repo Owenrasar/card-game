@@ -234,13 +234,15 @@ public class CombatManager : MonoBehaviour
 
         foreach (var attack in attacks)//finish up clashing between attacks
         {
-            attack.render();
             if (toDestroy.Contains(attack)) {
+                ((Attack)attack).lost = true;
                 attack.ClashLose();
             }
-            if (toWin.Contains(attack)) {
+            if (toWin.Contains(attack))
+            {
                 attack.ClashWin();
             }
+            attack.render();
         }
 
         foreach (var action in attacks) // attacks damage (or get blocked or dodged)
