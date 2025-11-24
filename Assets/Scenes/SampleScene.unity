@@ -3595,7 +3595,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6550df8c1dd2d384486fb17879ab1825, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slashParticle: {fileID: 7053416319938945753, guid: 6e79f881bfcac1e4b9723a3df14e781e, type: 3}
+  slashParticle: {fileID: 7053416319938945753, guid: de39fd706d543434cb3995fa6b810a24, type: 3}
   looseSlashParticle: {fileID: 7053416319938945753, guid: e7bf122a40297ee4781828fea5ba0b82, type: 3}
 --- !u!114 &1853814314 stripped
 MonoBehaviour:

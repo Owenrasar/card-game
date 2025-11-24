@@ -29,9 +29,9 @@ MonoBehaviour:
   m_Name: Dodge
   m_EditorClassIdentifier: 
   markers: []
-  valueMod: -1
+  valueMod: 0
   value: 0
-  arg: 3
+  arg: 2
   parentCard: {fileID: 0}
   parentTimeline: {fileID: 0}
   owner: {fileID: 0}

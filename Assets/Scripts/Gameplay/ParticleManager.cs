@@ -44,6 +44,8 @@ public class ParticleManager : MonoBehaviour
         if (size > 1)
         {
             particle.transform.localScale = new Vector3(size+0.5f,size-1.5f,1);
+        } else {
+            particle.transform.localScale = new Vector3(size+0.5f,1f,1);
         }
     }
 }
