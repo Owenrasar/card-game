@@ -6,6 +6,8 @@ public class ParticleManager : MonoBehaviour
 {
     public GameObject slashParticle;
     public GameObject looseSlashParticle;
+
+    public GameObject hitParticle;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,7 +19,7 @@ public class ParticleManager : MonoBehaviour
     {
 
     }
-    
+
     public void playSlash(int size, int dir, bool isLost)
     {
         Debug.Log("dir is: " + dir);
@@ -32,7 +34,7 @@ public class ParticleManager : MonoBehaviour
         }
         particle.GetComponent<ParticleSystem>().Play();
         var main = particle.GetComponent<ParticleSystem>().main;
-        main.startRotationX = 90*dir;
+        main.startRotationX = 90 * dir;
         main.startRotationY = 90;
         main.startRotationZ = 0;
         if (dir < 0)
@@ -41,11 +43,18 @@ public class ParticleManager : MonoBehaviour
         }
         particle.transform.position = new Vector3(transform.position.x, transform.position.y, -3);
 
-        if (size > 1)
-        {
-            particle.transform.localScale = new Vector3(size+0.5f,size-1.5f,1);
-        } else {
-            particle.transform.localScale = new Vector3(size+0.5f,1f,1);
-        }
+
+        particle.transform.localScale = new Vector3(size + 0.5f, size / 2f, 1);
+    }
+    
+    public void playHit(GameObject target)
+    {
+        GameObject particle;
+
+        particle = Instantiate(hitParticle, transform.position, Quaternion.identity);
+        particle.GetComponent<ParticleSystem>().Play();
+        var main = particle.GetComponent<ParticleSystem>().main;
+        particle.transform.position = new Vector3(target.transform.position.x, target.transform.position.y, -3);
+        particle.transform.SetParent(target.transform);
     }
 }

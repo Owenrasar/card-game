@@ -19,7 +19,12 @@ public abstract class Action : ScriptableObject
 
     public bool isEX = false;
 
-    public abstract void Play();
+    public void Play()
+    {
+        PlaySpecific();
+    }
+
+    public abstract void PlaySpecific();
 
     public void ClashLose() {
         Debug.Log("we LOST");

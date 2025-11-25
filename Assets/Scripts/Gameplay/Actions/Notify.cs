@@ -4,7 +4,7 @@ using TMPro;
 public class Notify : MonoBehaviour
 {
     public TextMeshPro textMesh;
-    public float moveDuration = 1.0f;
+    public float moveDuration = 3.0f;
     public AnimationCurve arcCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
 
     private Vector3 startPos;
@@ -27,10 +27,7 @@ public class Notify : MonoBehaviour
     /// <param name="height">Arc height above the start position</param>
     public void DisplayNotify(string message, Vector3 position, Color color, float height)
     {
-        if (message == "0")
-        {
-            return;
-        }
+        if (message == "0") return;
         transform.position = position;
         textMesh.text = message;
         textMesh.color = color;

@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7053416319938945753}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.01, y: 0, z: 0}
   m_LocalScale: {x: 2, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1544,7 +1544,7 @@ ParticleSystem:
     flipU: 0
     flipV: 0
   VelocityModule:
-    enabled: 0
+    enabled: 1
     x:
       serializedVersion: 2
       minMaxState: 0
@@ -2078,7 +2078,7 @@ ParticleSystem:
     speedModifier:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 0.5
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -4481,13 +4481,13 @@ ParticleSystem:
           outWeight: 0.21138208
         - serializedVersion: 3
           time: 1
-          value: 0.74999934
-          inSlope: -0.18246451
-          outSlope: -0.18246451
+          value: 0.6564813
+          inSlope: 0.035286427
+          outSlope: 0.035286427
           tangentMode: 0
           weightedMode: 0
-          inWeight: 0.24738681
-          outWeight: 0.33333334
+          inWeight: 0.33333334
+          outWeight: 0.43341658
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
@@ -4861,7 +4861,7 @@ ParticleSystemRenderer:
   m_FreeformStretching: 0
   m_RotateWithStretchDirection: 1
   m_VertexStreams: 000103040522
-  m_Mesh: {fileID: 4493585093827132993, guid: 728edce7b091d2c4182cb787770e07b5, type: 3}
+  m_Mesh: {fileID: -1550514412580984892, guid: 644cbc3e65d15f143b13939e514d5b8d, type: 3}
   m_Mesh1: {fileID: 0}
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}

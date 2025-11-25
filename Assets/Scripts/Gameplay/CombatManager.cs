@@ -114,6 +114,14 @@ public class CombatManager : MonoBehaviour
                         change = true;
                     }
                 }
+                foreach (Timeline bTimeline in blockers)
+                {
+                    if (dTimeline.tileIndexs[0] == bTimeline.tileIndexs[0])
+                    {
+                        dTimeline.tileIndexs.RemoveAt(0);//just remove the exact endpoint
+                        change = true;
+                    }
+                }
                 foreach (Timeline d2Timeline in dodgers)
                 {
                     if ((d2Timeline != dTimeline) && (dTimeline.tileIndexs[0] == d2Timeline.tileIndexs[0]))
@@ -144,6 +152,7 @@ public class CombatManager : MonoBehaviour
 
                         if (overlap != null)
                         {
+                            int blockerTile = bTimeline.tileIndexs[0];
                             if (bTimeline.tileIndexs.Count != 1)//both dodging and blocking
                             {
                                 Debug.Log("YOU HAVENT CODED THIS INTERACTION YET BOZO");
@@ -161,18 +170,27 @@ public class CombatManager : MonoBehaviour
                     }
                     else
                     {
-                        //the dodge wins, and gets to go through
+                        int blockerTile = bTimeline.tileIndexs[0];
+                        int cutoffIndex = dTimeline.tileIndexs.IndexOf(blockerTile);
+                        if (cutoffIndex > 0)
+                        {
+                            dTimeline.tileIndexs = dTimeline.tileIndexs.Take(cutoffIndex).ToList();
+                            change = true; 
+                        }
                     }
                 }
             }
         }
-        foreach (Dodge dodge in dodges) //actualy move, now that tiles are correct
-            {
-                Vector3 pos = dodge.owner.transform.position;
-                pos.x = dodge.parentTimeline.tileIndexs[0];
-                dodge.owner.transform.position = pos;
-                dodge.render();
-            }
+        foreach (Dodge dodge in dodges) //now actually do the movment
+        {
+            Vector3 currentPos = dodge.owner.transform.position;
+            Vector3 targetPos = currentPos;
+            targetPos.x = dodge.parentTimeline.tileIndexs[0];
+
+            StartCoroutine(LerpDodge(dodge.owner.transform, targetPos, 0.05f));
+            
+            dodge.render(); 
+        }
     }
 
     public void ResetDodges()
@@ -259,9 +277,10 @@ public class CombatManager : MonoBehaviour
 
                 // Check if ANY of the creature's tile indices overlap the attack area
                 bool overlaps = timeline.tileIndexs.Any(index => atk.area.Contains(index));
-                if (overlaps)
+                if (overlaps) //DO THE DAMAGE
                 {
                     timeline.owner.GetComponent<HealthManager>().Hit(atk);
+                    if (action.value > 0) action.owner.GetComponent<ParticleManager>().playHit(timeline.owner);
                     alreadyHit.Add(timeline.owner);
                 }
             }
@@ -287,7 +306,8 @@ public class CombatManager : MonoBehaviour
         }
     }
 
-    public void RemoveDodges() {
+    public void RemoveDodges()
+    {
         foreach (var timeline in FindObjectsOfType<Timeline>())
         {
             Dodge checker = timeline.owner.GetComponent<HealthManager>().activeDodge;
@@ -297,5 +317,23 @@ public class CombatManager : MonoBehaviour
             }
         }
     }
+    
+
+    private IEnumerator LerpDodge(Transform targetTransform, Vector3 targetPosition, float duration)
+    {
+    float time = 0;
+    Vector3 startPosition = targetTransform.position;
+
+    while (time < duration)
+    {
+        targetTransform.position = Vector3.Lerp(startPosition, targetPosition, time / duration);
+        time += Time.deltaTime;
+        yield return null;
+    }
+
+    targetTransform.position = targetPosition;
+    }
 }
+
+
 

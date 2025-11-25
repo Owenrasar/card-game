@@ -4480,13 +4480,22 @@ ParticleSystem:
           inWeight: 0.33333334
           outWeight: 0.21138208
         - serializedVersion: 3
-          time: 1
-          value: 0.74999934
-          inSlope: -0.18246451
-          outSlope: -0.18246451
+          time: 0.5704495
+          value: 0.5731511
+          inSlope: 0.035286427
+          outSlope: 0.035286427
           tangentMode: 0
           weightedMode: 0
-          inWeight: 0.24738681
+          inWeight: 0.33333334
+          outWeight: 0.43341658
+        - serializedVersion: 3
+          time: 1
+          value: 0.6319479
+          inSlope: -0.24123988
+          outSlope: -0.24123988
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.3310424
           outWeight: 0.33333334
         m_PreInfinity: 2
         m_PostInfinity: 2
@@ -4819,7 +4828,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 69ae5d0e6d644c04b89fb50cacb1e7ca, type: 2}
+  - {fileID: 2100000, guid: 2d13901d0a2c48841b698f3077d5d6be, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4861,7 +4870,7 @@ ParticleSystemRenderer:
   m_FreeformStretching: 0
   m_RotateWithStretchDirection: 1
   m_VertexStreams: 000103040522
-  m_Mesh: {fileID: 4493585093827132993, guid: 728edce7b091d2c4182cb787770e07b5, type: 3}
+  m_Mesh: {fileID: -1550514412580984892, guid: 644cbc3e65d15f143b13939e514d5b8d, type: 3}
   m_Mesh1: {fileID: 0}
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}

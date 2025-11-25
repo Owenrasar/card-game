@@ -4,7 +4,7 @@ using UnityEngine;
 public class Blank : Action
 {
 
-    public override void Play()
+    public override void PlaySpecific()
     {
     }
     public override string giveType()

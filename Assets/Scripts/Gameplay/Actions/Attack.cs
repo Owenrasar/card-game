@@ -9,7 +9,7 @@ public class Attack : Action
     public List<int> area = new List<int>();
 
     public bool lost = false;
-    public override void Play()
+    public override void PlaySpecific()
     {
 
         CombatManager arenaManager = parentTimeline.gameObject.GetComponent<CombatManager>();
@@ -26,7 +26,7 @@ public class Attack : Action
 
         for (int i = 1; i <= Mathf.Abs(arg); i++)
         {
-            area.Add(parentTimeline.tileIndexs[0] + i * mult);//BAND AID FIX, make some sort of function to get correct tielindex. ALSO IT NEEDS TO FLIP
+            area.Add(parentTimeline.tileIndexs[0] + i * mult);
         }
         arenaManager.AddAttack(this);
     }
@@ -70,7 +70,7 @@ public class Attack : Action
 
     public override void render()
     {
-        
+        /*
         GameObject markerFab = markers[0];
         GameObject markerPlace = parentTimeline.transform.parent.Find("Markers").gameObject;
         int mult = 0;
@@ -86,19 +86,35 @@ public class Attack : Action
         if (area.Count==0){
             for (int i = 1; i <= Mathf.Abs(arg); i++)
             {
-                area.Add(parentTimeline.tileIndexs[0] + i * mult);//BAND AID FIX, make some sort of function to get correct tielindex. ALSO IT NEEDS TO FLIP
+                area.Add(parentTimeline.tileIndexs[0] + i * mult);
             }
         }
         Debug.Log(area);
 
         foreach (var pos in area)
         {
-            GameObject marker = Instantiate(markerFab, new Vector3(pos, 1, -1), Quaternion.identity);
+            GameObject marker = Instantiate(markerFab, new Vector3(pos, 1, -value), Quaternion.identity);
             marker.transform.parent = markerPlace.transform;
             markers.Add(marker);
+            if (mult == -1)
+            {
+                marker.GetComponent<SpriteRenderer>().flipX = true;
+            }
             marker.GetComponent<Marker>().FlashActive(0.0f, 0.5f);
+        }
+        
+        */
+        int mult = 0;
+        if (arg >= 0)
+        {
+            mult = 1;
+        }
+        else
+        {
+            mult = -1;
         }
         owner.GetComponent<ParticleManager>().playSlash((int)Mathf.Abs(arg),mult,lost);
 
     }
+    
 }   

@@ -5,7 +5,7 @@ using UnityEngine;
 public class Telegraph : Action
 {
     public Action linkedAction;
-    public override void Play()
+    public override void PlaySpecific()
     {
         CombatManager arenaManager = parentTimeline.gameObject.GetComponent<CombatManager>();
         arenaManager.AddTelegraph(this);
@@ -48,22 +48,32 @@ public class Telegraph : Action
                 {
                     ((Attack)linkedAction).area.Add(linkedAction.parentTimeline.tileIndexs[0] + i * mult);//BAND AID FIX, make some sort of function to get correct tielindex. ALSO IT NEEDS TO FLIP
                 }
-            
+            GameObject marker = null;
             foreach (var pos in ((Attack)linkedAction).area)
             {
-                GameObject marker = Instantiate(markerFab, new Vector3(pos, 1, -1), Quaternion.identity);
+                marker = Instantiate(markerFab, new Vector3(pos, 1.5f, -1), Quaternion.identity);
                 marker.transform.parent = markerPlace.transform;
                 markers.Add(marker);
                 marker.GetComponent<Marker>().PreRender();
+                if (swap)
+                {
+                    marker.GetComponent<SpriteRenderer>().flipX = true;
+                }
             }
-            if (swap) linkedAction.arg *= -1;
+            //marker.GetComponent<SpriteRenderer>().sprite = parentTimeline.attackDirectionalMarkerSprite;
+            marker.transform.localScale = new Vector3(1, 1, 1);
+            if (swap)
+            {
+                linkedAction.arg *= -1;
+                //marker.GetComponent<SpriteRenderer>().flipX = true;
+            }
             ((Attack)linkedAction).area = new List<int>();
 
         }   else if (type == "Block"){//blocks do not clear themselves, so we slap it in TeleMarkers to get cleared later
             GameObject markerFab = linkedAction.markers[0];
             GameObject markerPlace = linkedAction.parentTimeline.transform.parent.Find("TeleMarkers").gameObject;
             int pos = linkedAction.parentTimeline.tileIndexs[0]; 
-            GameObject marker = Instantiate(markerFab, new Vector3(pos, 1, -0.5f), Quaternion.identity);
+            GameObject marker = Instantiate(markerFab, new Vector3(pos, 1.5f, -0.5f), Quaternion.identity);
             marker.transform.parent = markerPlace.transform;
             marker.GetComponent<Marker>().PreRender();
 
@@ -79,7 +89,7 @@ public class Telegraph : Action
             }
             float endTile = startTile+linkedAction.arg+dir;
             while (startTile != endTile){
-                GameObject marker = Instantiate(markerFab, new Vector3(startTile, 1, -1), Quaternion.identity);
+                GameObject marker = Instantiate(markerFab, new Vector3(startTile, 1.5f, -1), Quaternion.identity);
                 marker.transform.parent = markerPlace.transform;
                 markers.Add(marker);
                 marker.GetComponent<Marker>().PreRender();

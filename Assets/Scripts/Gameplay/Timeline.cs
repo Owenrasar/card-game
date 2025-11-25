@@ -26,6 +26,8 @@ public class Timeline : MonoBehaviour
 
     public GameObject attackLostMarker;
 
+    public Sprite attackDirectionalMarkerSprite;
+
     public GameObject dodgeMarker;
 
     public GameObject dodgeLostMarker;
@@ -36,6 +38,7 @@ public class Timeline : MonoBehaviour
 
     public Telegraph telegraph;
 
+    public Animator anim;
     public void Tick()
     {
         currAction = actions[timeIndex];
@@ -53,21 +56,36 @@ public class Timeline : MonoBehaviour
                     currAction.arg *= -1;
                 }
 
-                if (type =="Telegraph" && ((Telegraph)currAction).linkedAction.giveType() != "Block") {
+                if (type == "Telegraph" && ((Telegraph)currAction).linkedAction.giveType() != "Block")
+                {
                     ((Telegraph)currAction).linkedAction.arg *= -1;
                 }
-            } 
+            }
+
             //display stuff
+            if (type == "Telegraph")
+            {
+                anim.SetTrigger("prep " + ((Telegraph)currAction).linkedAction.giveType());
+            } else
+            {
+              anim.SetTrigger(type);  
+            }
+            anim.SetTrigger(type);
             currAction.Play();
-            if (ownerLabel) {
-                if (type == "Telegraph") {
+            if (ownerLabel)
+            {
+                if (type == "Telegraph")
+                {
                     ownerLabel.text = (((Telegraph)currAction).linkedAction.value).ToString();
-                } else {
+                }
+                else
+                {
                     ownerLabel.text = (currAction.value).ToString();
                 }
             }
-        
-        } 
+        }
+
+
 
         timeIndex += 1;
         if (timeIndex >= actions.Count)

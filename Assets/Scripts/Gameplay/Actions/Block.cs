@@ -5,7 +5,7 @@ using TMPro;
 public class Block : Action
 {
 
-    public override void Play()
+    public override void PlaySpecific()
     {
         owner.GetComponent<HealthManager>().activeBlock = this;
         render();
@@ -24,7 +24,7 @@ public class Block : Action
         GameObject markerFab = markers[0];
         GameObject markerPlace = owner;
         int pos = parentTimeline.tileIndexs[0]; 
-        GameObject marker = Instantiate(markerFab, new Vector3(pos, 1, -0.5f), Quaternion.identity);
+        GameObject marker = Instantiate(markerFab, new Vector3(pos, 1.5f, -0.5f), Quaternion.identity);
         marker.transform.parent = markerPlace.transform;
         markers.Add(marker);  
         marker.GetComponent<Marker>().FlashActive(0.0f,0.5f);

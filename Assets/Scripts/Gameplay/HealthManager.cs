@@ -36,6 +36,9 @@ public class HealthManager : MonoBehaviour
             if (baseDamage <= activeDodge.value)
             {
                 Debug.Log("dodged");
+                
+                GameObject n = Instantiate(notifyPrefab);
+                n.GetComponent<Notify>().DisplayNotify("Dodged", this.gameObject.transform.position, Color.yellow, 3f);
                 return;
             }
             else
@@ -63,14 +66,14 @@ public class HealthManager : MonoBehaviour
     public void takeDamage(int damage){
         HP -= damage;
         GameObject n = Instantiate(notifyPrefab);
-        n.GetComponent<Notify>().DisplayNotify((damage).ToString(), this.gameObject.transform.position, Color.red, 1f);
+        n.GetComponent<Notify>().DisplayNotify((damage).ToString(), this.gameObject.transform.position, Color.red, 3f);
     }
 
     public void takeStagger(int damage){
         stagger -= damage;
 
         GameObject n = Instantiate(notifyPrefab);
-        n.GetComponent<Notify>().DisplayNotify((damage).ToString(), this.gameObject.transform.position, Color.yellow, 0.75f);
+        n.GetComponent<Notify>().DisplayNotify((damage).ToString(), this.gameObject.transform.position, new Color(1.0f, 0.6470588f, 0f, 1.0f),2.5f);
     
     }
 }

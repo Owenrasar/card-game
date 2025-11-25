@@ -4,7 +4,7 @@ using UnityEngine;
 public class Dodge : Action
 {
 
-    public override void Play()
+    public override void PlaySpecific()
     {
         owner.GetComponent<HealthManager>().activeDodge = this;
         parentTimeline.GetComponent<CombatManager>().AddDodge(this);
@@ -23,7 +23,7 @@ public class Dodge : Action
         foreach (var pos in parentTimeline.tileIndexs)
         {
             if (!first){
-                GameObject marker = Instantiate(markerFab, new Vector3(pos, 1, -1), Quaternion.identity);
+                GameObject marker = Instantiate(markerFab, new Vector3(pos, 1.5f, -1), Quaternion.identity);
                 marker.transform.parent = markerPlace.transform;
                 markers.Add(marker);
                 marker.GetComponent<Marker>().FlashActive(0.0f,0.5f);

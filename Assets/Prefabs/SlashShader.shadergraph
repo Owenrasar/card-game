@@ -1336,8 +1336,8 @@
     ],
     "m_VertexContext": {
         "m_Position": {
-            "x": 1173.333251953125,
-            "y": 1074.0
+            "x": 1337.333251953125,
+            "y": 1190.0
         },
         "m_Blocks": [
             {
@@ -2609,7 +2609,7 @@
         "a": 0.0
     },
     "isMainColor": false,
-    "m_ColorMode": 0
+    "m_ColorMode": 1
 }
 
 {
@@ -6514,7 +6514,7 @@
         "a": 0.0
     },
     "isMainColor": false,
-    "m_ColorMode": 0
+    "m_ColorMode": 1
 }
 
 {
