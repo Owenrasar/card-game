@@ -7,11 +7,11 @@ public class Timeline : MonoBehaviour
 {
     public bool PlayerOwned = false;
     [SerializeReference] public List<Card> cards = new List<Card>();
-    
+
     [SerializeReference] public List<Action> actions = new List<Action>();
 
     public Action currAction;
-    
+
     public int timeIndex = 0;
 
     public List<int> tileIndexs = new List<int>();
@@ -38,14 +38,26 @@ public class Timeline : MonoBehaviour
 
     public Telegraph telegraph;
 
+    public Blank blank;
+
     public Animator anim;
+
+    public int side; //1 is right, -1 is left
+
+    public int maxActions;
+
     public void Tick()
     {
-        currAction = actions[timeIndex];
-
+        if (timeIndex < actions.Count && timeIndex < maxActions*2)
+        {
+            currAction = actions[timeIndex];
+        } else {
+            currAction = blank;
+        }
         //check if we need to FLIP
         if (targetTimeline)
         {
+            CheckFlip();
             string type = currAction.giveType();
             int ownerPos = tileIndexs[tileIndexs.Count - 1];
             int targetPos = targetTimeline.tileIndexs[targetTimeline.tileIndexs.Count - 1];
@@ -66,11 +78,31 @@ public class Timeline : MonoBehaviour
             if (type == "Telegraph")
             {
                 anim.SetTrigger("prep " + ((Telegraph)currAction).linkedAction.giveType());
-            } else
-            {
-              anim.SetTrigger(type);  
             }
-            anim.SetTrigger(type);
+            else
+            {
+                if (type != "Dodge")
+                {
+                    anim.SetTrigger(type);
+                }
+                else
+                {
+                    if (currAction.arg * side < 0)
+                    {
+                        anim.SetTrigger("back " + type);
+                    }
+                    else
+                    {
+                        anim.SetTrigger("forward " + type);
+                    }
+                }
+            }
+
+
+
+
+
+
             currAction.Play();
             if (ownerLabel)
             {
@@ -83,19 +115,37 @@ public class Timeline : MonoBehaviour
                     ownerLabel.text = (currAction.value).ToString();
                 }
             }
+            CheckFlip();
         }
 
 
 
         timeIndex += 1;
-        if (timeIndex >= actions.Count)
-        {
-            End();
-        }
-    }
-    void End()
-    {
 
+    }
+    public void End()
+    {
+        actions = new List<Action>();
+        cards = new List<Card>();
+        timeIndex = 0;
+    }
+    
+    void CheckFlip()
+    {
+        int ownerPos = tileIndexs[tileIndexs.Count - 1];
+        int targetPos = targetTimeline.tileIndexs[targetTimeline.tileIndexs.Count - 1];
+            
+            
+        if (targetPos < ownerPos && side == 1)
+        {
+            side = -1;
+            StartCoroutine(LerpTurn(-1));
+        }
+        else if (targetPos > ownerPos && side == -1)
+        {
+            side = 1;
+            StartCoroutine(LerpTurn(1));
+        }
     }
 
     public void Init()
@@ -109,24 +159,27 @@ public class Timeline : MonoBehaviour
             Card newCard = Instantiate(originalCard);
 
             newCard.actions = new List<Action>();
-            
+
             foreach (var originalAction in originalCard.actions)
             {
                 Action newAction = Instantiate(originalAction);
                 newAction.parentCard = newCard;
                 newAction.parentTimeline = this;
                 newAction.owner = owner;
-                newAction.value = newCard.cost+newAction.valueMod;
+                newAction.value = newCard.cost + newAction.valueMod;
                 string type = newAction.giveType();
-                if (type == "Attack"){
+                if (type == "Attack")
+                {
                     newAction.markers.Add(attackMarker);
                     newAction.markers.Add(attackLostMarker);
                 }
-                if (type == "Dodge"){
+                if (type == "Dodge")
+                {
                     newAction.markers.Add(dodgeMarker);
                     newAction.markers.Add(dodgeLostMarker);
                 }
-                if (type == "Block"){
+                if (type == "Block")
+                {
                     newAction.markers.Add(blockMarker);
                     newAction.markers.Add(blockLostMarker);
                 }
@@ -151,7 +204,7 @@ public class Timeline : MonoBehaviour
 
     public void softInit()
     {
-        
+
         List<Card> uniqueCards = new List<Card>();
         actions = new List<Action>();
         Telegraph teleAction = null;
@@ -161,24 +214,27 @@ public class Timeline : MonoBehaviour
             Card newCard = Instantiate(originalCard);
 
             newCard.actions = new List<Action>();
-            
+
             foreach (var originalAction in originalCard.actions)
             {
                 Action newAction = Instantiate(originalAction);
                 newAction.parentCard = newCard;
                 newAction.parentTimeline = this;
                 newAction.owner = owner;
-                newAction.value = newCard.cost+newAction.valueMod;
+                newAction.value = newCard.cost + newAction.valueMod;
                 string type = newAction.giveType();
-                if (type == "Attack"){
+                if (type == "Attack")
+                {
                     newAction.markers.Add(attackMarker);
                     newAction.markers.Add(attackLostMarker);
                 }
-                if (type == "Dodge"){
+                if (type == "Dodge")
+                {
                     newAction.markers.Add(dodgeMarker);
                     newAction.markers.Add(dodgeLostMarker);
                 }
-                if (type == "Block"){
+                if (type == "Block")
+                {
                     newAction.markers.Add(blockMarker);
                     newAction.markers.Add(blockLostMarker);
                 }
@@ -195,4 +251,21 @@ public class Timeline : MonoBehaviour
         }
     }
 
+    private IEnumerator LerpTurn(int zScale)
+    {
+        Transform model = owner.transform.Find("Model");
+        float time = 0;
+        float duration = 0.1f;
+        Vector3 startScale = model.transform.localScale;
+        Vector3 endScale = new Vector3(1, 1, zScale);
+
+        while (time < duration)
+        {
+            model.transform.localScale = Vector3.Lerp(startScale, endScale, time / duration);
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+        model.transform.localScale = endScale;
+    }
 }

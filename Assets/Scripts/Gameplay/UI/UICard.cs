@@ -17,8 +17,6 @@ public class UICard : MonoBehaviour
     public UITimeline linkedUITimeline;
 
     [Header("Positions (local space, relative to parent)")]
-    // public Vector3 bottomPos; // Replaced by bottomPosY
-    // public Vector3 topPos; // Replaced by topPosY
     public float offPosY;
     public float bottomPosY;
     public float topPosY;
@@ -126,6 +124,36 @@ public class UICard : MonoBehaviour
         currentMove = StartCoroutine(MoveAndScaleRoutine(targetPos, targetScale));
     }
 
+    public void MaxLower()
+    {
+        if (currentMove != null)
+            StopCoroutine(currentMove);
+
+        // Call the updated routine with position and scale
+        // Target Y pos is from variable, X/Z pos are from current transform
+        Vector3 targetPos = new Vector3(
+            rectTransform.localPosition.x,
+            offPosY,
+           -5 
+        );
+        
+        // Target X/Z scale is from variable, Y scale is from current transform
+        Vector3 targetScale = new Vector3(
+            lowerScale,
+            lowerScale,
+            lowerScale
+        );
+
+        if (cardCanvas != null)
+        {
+            // Set it back to the default order
+            cardCanvas.sortingOrder = 0;
+            nameLabel.sortingOrder = 0;
+            dashLabel.sortingOrder = 0;
+            actionLabel.sortingOrder = 0;
+        }
+        currentMove = StartCoroutine(MoveAndScaleRoutine(targetPos, targetScale));
+    }
     /// <summary>
     /// Coroutine to move and scale the card simultaneously.
     /// </summary>
@@ -137,7 +165,7 @@ public class UICard : MonoBehaviour
         Vector3 startScale = rectTransform.localScale;
 
         float distance = Vector3.Distance(startPos, targetPos);
-        
+
         // Check if we are already (practically) at the target
         if (distance < 0.001f && Vector3.Distance(startScale, targetScale) < 0.001f)
             yield break;
@@ -154,7 +182,7 @@ public class UICard : MonoBehaviour
             else
             {
                 // If only scaling, just use moveSpeed as a duration factor
-                t += Time.deltaTime * moveSpeed; 
+                t += Time.deltaTime * moveSpeed;
             }
 
             // Ease-out quadratic: starts fast, slows near target
@@ -163,14 +191,14 @@ public class UICard : MonoBehaviour
             // Interpolate both position and scale
             rectTransform.localPosition = Vector3.Lerp(startPos, targetPos, easedT);
             rectTransform.localScale = Vector3.Lerp(startScale, targetScale, easedT);
-            
+
             yield return null;
         }
 
         // Snap to final position and scale
         rectTransform.localPosition = targetPos;
         rectTransform.localScale = targetScale;
-        
+
         currentMove = null;
     }
 

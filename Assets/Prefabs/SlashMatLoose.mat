@@ -52,16 +52,16 @@ Material:
     - _BUILTIN_ZWriteControl: 1
     - _DistortScale: 60
     - _DistortStrength: 0.295
-    - _Inner_Height: 0.25
-    - _Inner_Offset: 0.5
-    - _Inner_Width: 0.18
+    - _Inner_Height: -3.06
+    - _Inner_Offset: 0.56
+    - _Inner_Width: 0.01
     - _IsParticle: 1
     - _MaskHeight: 0.5
     - _MaskOffset: 0.15
     - _MaskWidth: 2.4
-    - _Outer_Height: 0.3
-    - _Outer_Offset: 0.5
-    - _Outer_Width: 1
+    - _Outer_Height: 0.23
+    - _Outer_Offset: 0.52
+    - _Outer_Width: 0.32
     - _Roundness: 0
     - _Slider: 360
     - _TimeMod: 0.5

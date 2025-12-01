@@ -42,7 +42,6 @@ public class CombatManager : MonoBehaviour
     {
         
         telegraphs.Add(telegraph);
-        Debug.Log("aded tele: " + telegraph);
     }
 
     public void ResolvePrep()
@@ -188,7 +187,8 @@ public class CombatManager : MonoBehaviour
             targetPos.x = dodge.parentTimeline.tileIndexs[0];
 
             StartCoroutine(LerpDodge(dodge.owner.transform, targetPos, 0.05f));
-            
+            int dist = ((int)(Mathf.Abs(currentPos.x - targetPos.x)));
+            StartCoroutine(dodge.owner.GetComponent<EffectManager>().GhostTrail(0.05f, dist*2,0.5f));
             dodge.render(); 
         }
     }
@@ -225,7 +225,6 @@ public class CombatManager : MonoBehaviour
                 {
                     if (areaA.Contains(tile))
                     {
-                        Debug.Log($"Collision on tile {tile} between Attack A: {atkA} and Attack B: {atkB}");
                         string loser = atkA.AttackClash(atkB);
 
                         if (loser == "other")
@@ -280,7 +279,7 @@ public class CombatManager : MonoBehaviour
                 if (overlaps) //DO THE DAMAGE
                 {
                     timeline.owner.GetComponent<HealthManager>().Hit(atk);
-                    if (action.value > 0) action.owner.GetComponent<ParticleManager>().playHit(timeline.owner);
+                    if (action.value > 0) action.owner.GetComponent<EffectManager>().playHit(timeline.owner);
                     alreadyHit.Add(timeline.owner);
                 }
             }
@@ -321,17 +320,17 @@ public class CombatManager : MonoBehaviour
 
     private IEnumerator LerpDodge(Transform targetTransform, Vector3 targetPosition, float duration)
     {
-    float time = 0;
-    Vector3 startPosition = targetTransform.position;
+        float time = 0;
+        Vector3 startPosition = targetTransform.position;
 
-    while (time < duration)
-    {
-        targetTransform.position = Vector3.Lerp(startPosition, targetPosition, time / duration);
-        time += Time.deltaTime;
-        yield return null;
-    }
+        while (time < duration)
+        {
+            targetTransform.position = Vector3.Lerp(startPosition, targetPosition, time / duration);
+            time += Time.deltaTime;
+            yield return null;
+        }
 
-    targetTransform.position = targetPosition;
+        targetTransform.position = targetPosition;
     }
 }
 

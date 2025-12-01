@@ -45,7 +45,6 @@ public class Block : Action
                 healthMan.takeStagger(baseDamage - value);
                 this.ClashLose();
                 atk.ClashWin();
-                Debug.Log("blocked but not but OW");
             }
     }
     

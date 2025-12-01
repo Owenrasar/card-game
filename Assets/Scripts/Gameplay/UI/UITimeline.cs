@@ -28,8 +28,18 @@ public class UITimeline : MonoBehaviour
     {
 
         linkedTimeline.softInit();
-        foreach(var action in actions){
+        foreach (var action in actions)
+        {
             action.UpdateAction();
+        }
+    }
+
+    public void ResetActions()
+    {
+        linkedTimeline.softInit();
+        foreach (var action in actions)
+        {
+            action.Reset();
         }
     }
 }

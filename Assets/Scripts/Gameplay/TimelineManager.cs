@@ -17,11 +17,14 @@ public class TimelineManager : MonoBehaviour
 
     public List<UITimeline> UItimelines = new List<UITimeline>();
 
+    public EnemyAI enemyAi;
+
     void Start(){
         StartCardRound();
     }
 
-    public void StartCardRound() {
+    public void StartCardRound()
+    {
         foreach (var timeline in UItimelines)
         {
             timeline.Init();
@@ -29,15 +32,23 @@ public class TimelineManager : MonoBehaviour
         }
         StartCoroutine(DrawHand());
     }
+    
+    public void EndCardRound()
+    {
+        foreach (var card in UIcards)
+        {
+            card.MaxLower();
+        }
+    }
     public void StartCombatRound()
     {
-        
+        EndCardRound();
         foreach (var timeline in timelines)
         {
             timeline.Init();
         }
 
-        timeSize = timelines[0].actions.Count+2;
+        timeSize = timelines[0].actions.Count+1;
         StartCoroutine(RunTimelineTicks());
     }
 
@@ -46,10 +57,16 @@ public class TimelineManager : MonoBehaviour
         yield return new WaitForSeconds(tickInterval);//delay becasue why not
         for (int i = 0; i < timeSize; i++)
         {
-            Debug.Log(i);
             MasterTick();
             yield return new WaitForSeconds(tickInterval);
         }
+
+        foreach (var timeline in timelines) //start setting up for next turn
+        {
+            timeline.End();
+        }
+        StartCoroutine(RaiseHand());
+        enemyAi.PrepHand();
     }
 
     IEnumerator DrawHand()
@@ -58,7 +75,21 @@ public class TimelineManager : MonoBehaviour
         foreach (var card in UIcards)
         {
             card.Init();
-            yield return new WaitForSeconds(tickInterval/4);
+            yield return new WaitForSeconds(tickInterval / 4);
+        }
+    }
+    
+    IEnumerator RaiseHand()
+    {
+        foreach (var card in UIcards)
+        {
+            card.Lower();
+            yield return new WaitForSeconds(tickInterval / 8);
+        }
+
+        foreach (var timeline in UItimelines)
+        {
+            timeline.ResetActions();
         }
     }
 

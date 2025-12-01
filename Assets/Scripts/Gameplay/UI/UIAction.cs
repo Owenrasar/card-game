@@ -58,10 +58,17 @@ public class UIAction : MonoBehaviour
         }
     }
 
-    private void changeColor(Color color){
+    private void changeColor(Color color)
+    {
         GetComponent<SpriteRenderer>().color = color;
         valueLabel.color = color;
         argLabel.color = color;
+    }
+    
+    public void Reset()
+    {
+        changeColor(defaultColor);
+        UpdateAction();
     }
 }
 

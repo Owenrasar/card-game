@@ -35,7 +35,6 @@ public class HealthManager : MonoBehaviour
         {
             if (baseDamage <= activeDodge.value)
             {
-                Debug.Log("dodged");
                 
                 GameObject n = Instantiate(notifyPrefab);
                 n.GetComponent<Notify>().DisplayNotify("Dodged", this.gameObject.transform.position, Color.yellow, 3f);
@@ -52,14 +51,12 @@ public class HealthManager : MonoBehaviour
 
                 activeDodge = null;
                 
-                Debug.Log("dodged but not but OW");
             }
         }
         else
         {
             //normal hit
             this.takeDamage(baseDamage);
-            Debug.Log("ow");
         }
     }
 

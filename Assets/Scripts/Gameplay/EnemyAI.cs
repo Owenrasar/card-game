@@ -10,7 +10,7 @@ public class EnemyAI : MonoBehaviour
     void Start(){
         PrepHand();
     }
-    void PrepHand()
+    public void PrepHand()
     {
         int num = 0;
         while (true) {

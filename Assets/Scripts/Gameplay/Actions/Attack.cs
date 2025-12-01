@@ -36,7 +36,6 @@ public class Attack : Action
         {
             otherAttack.owner.GetComponent<HealthManager>().takeStagger(value-otherAttack.value);
             otherAttack.Destroy();
-            Debug.Log("other");
             return "other";
         }
         else if (value < otherAttack.value)
@@ -45,7 +44,6 @@ public class Attack : Action
             owner.GetComponent<HealthManager>().takeStagger(otherAttack.value-value);
             Destroy();
             
-            Debug.Log("self");
             return "self";
         }
         else
@@ -53,7 +51,6 @@ public class Attack : Action
             otherAttack.Destroy();
             Destroy();
 
-            Debug.Log("both");
             return "both";
         }
     }
@@ -113,7 +110,7 @@ public class Attack : Action
         {
             mult = -1;
         }
-        owner.GetComponent<ParticleManager>().playSlash((int)Mathf.Abs(arg),mult,lost);
+        owner.GetComponent<EffectManager>().playSlash((int)Mathf.Abs(arg),mult,lost);
 
     }
     
