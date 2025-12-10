@@ -4,7 +4,7 @@ using TMPro;
 public class Notify : MonoBehaviour
 {
     public TextMeshPro textMesh;
-    public float moveDuration = 3.0f;
+    public float moveDuration = 1.0f;
     public AnimationCurve arcCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
 
     private Vector3 startPos;

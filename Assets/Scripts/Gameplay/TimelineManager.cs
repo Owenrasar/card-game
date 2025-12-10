@@ -19,6 +19,12 @@ public class TimelineManager : MonoBehaviour
 
     public EnemyAI enemyAi;
 
+    public GameObject canvas;
+
+    public GameObject winUI;
+
+    public GameObject lossUI;
+
     void Start(){
         StartCardRound();
     }
@@ -61,12 +67,28 @@ public class TimelineManager : MonoBehaviour
             yield return new WaitForSeconds(tickInterval);
         }
 
+        
+
         foreach (var timeline in timelines) //start setting up for next turn
         {
             timeline.End();
+            if (timeline.owner.GetComponent<HealthManager>().HP <= 0){
+                if (!(timeline.PlayerOwned)){//player WIN
+                    GameObject newUI = Instantiate(winUI);
+                    newUI.transform.SetParent(canvas.transform, false);
+                    yield break;
+                } else {//player LOOSE
+                    GameObject newUI = Instantiate(lossUI);
+                    newUI.transform.SetParent(canvas.transform, false);
+                    yield break;
+                }
+            }
         }
         StartCoroutine(RaiseHand());
         enemyAi.PrepHand();
+        foreach (var timeline in timelines){
+            timeline.owner.GetComponent<HealthManager>().EndTurn();
+        }
     }
 
     IEnumerator DrawHand()

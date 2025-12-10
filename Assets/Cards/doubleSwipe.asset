@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-3251685261105968052
+--- !u!114 &-4215034221813922918
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -13,14 +13,15 @@ MonoBehaviour:
   m_Name: Attack
   m_EditorClassIdentifier: 
   markers: []
-  valueMod: 0
+  valueMod: 1
   value: 0
-  arg: 2
-  parentCard: {fileID: 11400000}
+  arg: 3
+  parentCard: {fileID: 0}
   parentTimeline: {fileID: 0}
   owner: {fileID: 0}
   isEX: 0
   area: 
+  lost: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34,7 +35,6 @@ MonoBehaviour:
   m_Name: doubleSwipe
   m_EditorClassIdentifier: 
   actions:
-  - {fileID: -3251685261105968052}
-  - {fileID: -3251685261105968052}
+  - {fileID: -4215034221813922918}
   cost: 2
-  name: Double Swipe
+  name: Swipe

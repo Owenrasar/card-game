@@ -17,12 +17,15 @@ public class UIAction : MonoBehaviour
 
     public int linkedIndex;
 
+    private bool dead = false;
+
     private void Awake()
     {
     }
 
     public void UpdateAction()
     {
+        if (dead) return;
         
         if (linkedTimeline.actions.Count > (linkedIndex)){
             
@@ -69,6 +72,21 @@ public class UIAction : MonoBehaviour
     {
         changeColor(defaultColor);
         UpdateAction();
+    }
+
+    public void Stagger()
+    {
+        changeColor(defaultColor);
+        valueLabel.text = "x";
+        argLabel.text = "x";
+    }
+
+    public void Kill()
+    {
+        changeColor(defaultColor);
+        valueLabel.text = "x";
+        argLabel.text = "x";
+        dead = true;
     }
 }
 

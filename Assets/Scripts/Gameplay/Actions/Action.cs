@@ -38,7 +38,7 @@ public abstract class Action : ScriptableObject
                 i+=1;
             }
         }
-        parentTimeline.ownerLabel.text += "*";
+        //parentTimeline.ownerLabel.text += "*";
     }
 
     public void ClashWin() {

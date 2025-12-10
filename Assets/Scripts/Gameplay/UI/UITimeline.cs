@@ -42,4 +42,18 @@ public class UITimeline : MonoBehaviour
             action.Reset();
         }
     }
+
+    public void Stagger(){
+        foreach (var action in actions)
+        {
+            action.Stagger();
+        }
+    }
+
+    public void Kill(){
+        foreach (var action in actions)
+        {
+            action.Kill();
+        }
+    }
 }

@@ -64,17 +64,10 @@ public class Marker : MonoBehaviour
             spriteRenderer.color = c;
             yield return null;
         }
-
-        // Restore transparent (optional)
         spriteRenderer.color = transparentColor;
         fadeRoutine = null;
     }
 
-    /// <summary>
-    /// Flashes the sprite from its current color to white and back.
-    /// </summary>
-    /// <param name="toWhiteTime">Time to reach full white.</param>
-    /// <param name="toNormalTime">Time to return to original color.</param>
     public void FlashActive(float toWhiteTime = 0.25f, float toNormalTime = 0.25f)
     {
         if (flashRoutine != null)
@@ -115,14 +108,8 @@ public class Marker : MonoBehaviour
         flashRoutine = null;
     }
 
-    // --- NEW BREAK FUNCTION ---
-
-    /// <summary>
-    /// Disables the current sprite and spawns two breaking pieces.
-    /// </summary>
     public void Break()
     {
-        // Stop any current fade or flash
         if (fadeRoutine != null)
         {
             StopCoroutine(fadeRoutine);
@@ -134,14 +121,11 @@ public class Marker : MonoBehaviour
             flashRoutine = null;
         }
 
-        // Turn off this marker's sprite
         spriteRenderer.enabled = false;
 
-        // Instantiate and initialize the break-down piece
         if (breakPrefab != null)
         {
             GameObject downPiece = Instantiate(breakPrefab, transform.position, Quaternion.identity);
-            // Try to get the BrokenPiece script and initialize it
             BrokenPiece pieceScript = downPiece.GetComponent<BrokenPiece>();
             if (pieceScript != null)
             {

@@ -210,7 +210,11 @@ public class UICard : MonoBehaviour
         foreach (var action in linkedCard.actions)
         {
             string type = action.giveType();
-            actionLabel.text += "[" + type + ", Val:" + (linkedCard.cost + action.valueMod).ToString() + ", Arg:" + action.arg.ToString() + "]\n";
+            if (type == "Block") {
+                actionLabel.text += "[" + type + ", Val:" + (linkedCard.cost + action.valueMod).ToString() + ", Time:" + action.arg.ToString() + "]\n";
+            } else {
+                actionLabel.text += "[" + type + ", Val:" + (linkedCard.cost + action.valueMod).ToString() + ", Area:" + action.arg.ToString() + "]\n";
+            }
         }
     }
 
@@ -220,6 +224,7 @@ public class UICard : MonoBehaviour
         linkedTimeline.cards.Add(linkedCard);
         linkedUITimeline.UpdateActions();
         deck = transform.parent.parent.parent.Find("PlayerDeck").GetComponent<DeckManager>();
+        deck.DiscardFromHand(linkedCard);
         linkedCard = deck.Draw();
         UpdateCard();
     }

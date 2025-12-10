@@ -30,13 +30,15 @@ public class Block : Action
         marker.GetComponent<Marker>().FlashActive(0.0f,0.5f);
     }
 
-    public void blockHit(Attack atk,HealthManager healthMan){ 
+    public bool blockHit(Attack atk,HealthManager healthMan){ //true if blocked, false if not
             int baseDamage = atk.value;
-            if (baseDamage < value)
+            if (baseDamage <= value)
             {
                 value-=baseDamage;
                 atk.owner.GetComponent<HealthManager>().takeStagger(value);
                 parentTimeline.ownerLabel.text = (value).ToString();
+                if (value == 0) this.ClashLose();
+                return true;
             }
             else
             {
@@ -45,6 +47,7 @@ public class Block : Action
                 healthMan.takeStagger(baseDamage - value);
                 this.ClashLose();
                 atk.ClashWin();
+                return false;
             }
     }
     

@@ -46,8 +46,10 @@ public class Timeline : MonoBehaviour
 
     public int maxActions;
 
+    private bool dead = false;
     public void Tick()
     {
+        if (dead) return;
         if (timeIndex < actions.Count && timeIndex < maxActions*2)
         {
             currAction = actions[timeIndex];
@@ -150,6 +152,7 @@ public class Timeline : MonoBehaviour
 
     public void Init()
     {
+
         List<Card> uniqueCards = new List<Card>();
         actions = new List<Action>();
         Telegraph teleAction = null;
@@ -267,5 +270,22 @@ public class Timeline : MonoBehaviour
         }
 
         model.transform.localScale = endScale;
+    }
+
+    public void Stagger(){
+        for (int i = 0; i< actions.Count; i++){
+            if (i >= timeIndex){
+                actions[i] = blank;
+            }
+        }
+    }
+
+    public void Kill(){
+        for (int i = 0; i< actions.Count; i++){
+            if (i >= timeIndex){
+                actions[i] = blank;
+                dead = true;
+            }
+        }
     }
 }

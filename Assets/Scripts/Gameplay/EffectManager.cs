@@ -8,6 +8,7 @@ public class EffectManager : MonoBehaviour
     public GameObject looseSlashParticle;
 
     public GameObject hitParticle;
+    public GameObject staggerParticle;
 
     public GameObject dashGhost;
     public Material dashGhostMaterial;
@@ -60,6 +61,18 @@ public class EffectManager : MonoBehaviour
         particle.transform.position = new Vector3(target.transform.position.x, target.transform.position.y, -3);
         particle.transform.SetParent(target.transform);
     }
+
+    public void playStagger(GameObject target)
+    {
+        GameObject particle;
+
+        particle = Instantiate(staggerParticle, transform.position, Quaternion.identity);
+        particle.GetComponent<ParticleSystem>().Play();
+        var main = particle.GetComponent<ParticleSystem>().main;
+        particle.transform.position = new Vector3(target.transform.position.x, target.transform.position.y, -3);
+        particle.transform.SetParent(target.transform);
+    }
+    
     
     // ---------------------------------------------------------
     // 1. THE SPAWNER

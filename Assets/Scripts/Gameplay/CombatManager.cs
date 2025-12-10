@@ -14,6 +14,8 @@ public class CombatManager : MonoBehaviour
 
     public List<Action> telegraphs = new List<Action>();
 
+    public AudioSource clashSound;
+
     public void Tick()
     {
         //determine hitboxes, then strike them, then update hitboxes, then remove blocks
@@ -101,6 +103,9 @@ public class CombatManager : MonoBehaviour
 
         foreach (Timeline dTimeline in dodgers)
         {
+            for (int i = 0; i < dTimeline.tileIndexs.Count; i++){
+                if (dTimeline.tileIndexs[i] < 0 || dTimeline.tileIndexs[i] > 11 ) dTimeline.tileIndexs.RemoveAt(i);
+            }
             bool change = true;
             while (change)
             {
@@ -226,6 +231,7 @@ public class CombatManager : MonoBehaviour
                     if (areaA.Contains(tile))
                     {
                         string loser = atkA.AttackClash(atkB);
+                        clashSound.Play();
 
                         if (loser == "other")
                         {
@@ -279,7 +285,7 @@ public class CombatManager : MonoBehaviour
                 if (overlaps) //DO THE DAMAGE
                 {
                     timeline.owner.GetComponent<HealthManager>().Hit(atk);
-                    if (action.value > 0) action.owner.GetComponent<EffectManager>().playHit(timeline.owner);
+                    if (action.value > 0 && timeline.owner.GetComponent<HealthManager>().HP > 0) action.owner.GetComponent<EffectManager>().playHit(timeline.owner);
                     alreadyHit.Add(timeline.owner);
                 }
             }
